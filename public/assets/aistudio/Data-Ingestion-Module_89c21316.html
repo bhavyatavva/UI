@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101d32">
+  <title>REG VISION | Data Ingestion</title>
+  <link rel="stylesheet" href="Data-Ingestion-Styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR: ONLY SIX ASSIGNED FEATURES -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">R</div>
+      <div>
+        <h2>REG VISION</h2>
+        <small>BASEL IV PLATFORM</small>
+      </div>
+    </div>
+
+    <div class="sidebar-label">DATA INGESTION</div>
+
+    <nav class="module-nav">
+      <a href="#source-registration" class="nav-item active">
+        <span>▣</span> Source System Registration
+      </a>
+      <a href="#feed-management" class="nav-item">
+        <span>⇄</span> Data Feed Management
+      </a>
+      <a href="#scheduled-ingestion" class="nav-item">
+        <span>◷</span> Scheduled Ingestion
+      </a>
+      <a href="#file-upload" class="nav-item">
+        <span>⇧</span> File Upload / API Integration
+      </a>
+      <a href="#feed-monitoring" class="nav-item">
+        <span>⌁</span> Feed Monitoring
+      </a>
+      <a href="#feed-dashboard" class="nav-item">
+        <span>▦</span> Feed Status Dashboard
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="avatar">DO</div>
+      <div>
+        <strong>Data Operations Analyst</strong>
+        <small>Bank Portal</small>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <header class="topbar">
+      <div>
+        <span class="breadcrumb">Bank Portal / Data Ingestion</span>
+        <h1>Data Ingestion Management</h1>
+      </div>
+      <div class="top-right">
+        <span class="period">Reporting Period: Q4 2026</span>
+        <span class="user-chip">Data Operations</span>
+      </div>
+    </header>
+
+    <section class="welcome">
+      <div>
+        <h2>Data Ingestion Workspace</h2>
+        <p>Register source systems, configure data feeds, schedule ingestion and monitor incoming reporting data.</p>
+      </div>
+      <span class="status-pill">● System Operational</span>
+    </section>
+
+    <!-- KPI CARDS -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <span>Registered Sources</span>
+        <h2 id="sourceCount">4</h2>
+        <small>Connected source systems</small>
+      </div>
+      <div class="kpi-card">
+        <span>Active Data Feeds</span>
+        <h2 id="feedCount">5</h2>
+        <small>Configured ingestion feeds</small>
+      </div>
+      <div class="kpi-card">
+        <span>Records Received</span>
+        <h2 id="recordCount">1,24,580</h2>
+        <small>Total ingested records</small>
+      </div>
+      <div class="kpi-card">
+        <span>Feed Health</span>
+        <h2 id="healthValue">80%</h2>
+        <small>Successful feed executions</small>
+      </div>
+    </section>
+
+    <!-- SOURCE SYSTEM REGISTRATION -->
+    <section class="content-card" id="source-registration">
+      <div class="section-heading">
+        <div>
+          <span class="section-number">01</span>
+          <h2>Source System Registration</h2>
+          <p>Register and maintain systems that provide regulatory reporting data.</p>
+        </div>
+        <button class="primary-btn" onclick="openSourceModal()">+ Register Source</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Source ID</th>
+              <th>Source System</th>
+              <th>Category</th>
+              <th>Connection</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="sourceTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- DATA FEED MANAGEMENT -->
+    <section class="content-card" id="feed-management">
+      <div class="section-heading">
+        <div>
+          <span class="section-number">02</span>
+          <h2>Data Feed Management</h2>
+          <p>Configure data feeds, source mapping, formats and ingestion frequency.</p>
+        </div>
+        <button class="primary-btn" onclick="openFeedModal()">+ Create Feed</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Feed ID</th>
+              <th>Feed Name</th>
+              <th>Source</th>
+              <th>Format</th>
+              <th>Frequency</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="feedTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SCHEDULED INGESTION -->
+    <section class="content-card" id="scheduled-ingestion">
+      <div class="section-heading">
+        <div>
+          <span class="section-number">03</span>
+          <h2>Scheduled Ingestion</h2>
+          <p>Manage planned execution schedules for automated data collection.</p>
+        </div>
+      </div>
+
+      <div class="schedule-grid">
+        <div class="schedule-box">
+          <span>Daily Ingestion</span>
+          <h3>02:00 AM</h3>
+          <small>Every business day</small>
+        </div>
+        <div class="schedule-box">
+          <span>Weekly Ingestion</span>
+          <h3>Sunday</h3>
+          <small>03:00 AM</small>
+        </div>
+        <div class="schedule-box">
+          <span>Monthly Ingestion</span>
+          <h3>1st Day</h3>
+          <small>04:00 AM</small>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <label for="scheduleFeed">Select Feed</label>
+        <select id="scheduleFeed"></select>
+        <label for="scheduleFrequency">Frequency</label>
+        <select id="scheduleFrequency">
+          <option>Daily</option>
+          <option>Weekly</option>
+          <option>Monthly</option>
+        </select>
+        <button class="primary-btn" onclick="saveSchedule()">Save Schedule</button>
+      </div>
+      <p class="message" id="scheduleMessage"></p>
+    </section>
+
+    <!-- FILE UPLOAD / API -->
+    <section class="content-card" id="file-upload">
+      <div class="section-heading">
+        <div>
+          <span class="section-number">04</span>
+          <h2>File Upload / API Integration</h2>
+          <p>Import reporting data using supported file formats or configured API connections.</p>
+        </div>
+      </div>
+
+      <div class="upload-area">
+        <div class="upload-icon">⇧</div>
+        <h3>Upload Reporting Data</h3>
+        <p>Choose a CSV file to simulate data ingestion.</p>
+        <input type="file" id="dataFile" accept=".csv">
+        <button class="primary-btn" onclick="uploadFile()">Upload File</button>
+        <p class="message" id="uploadMessage"></p>
+      </div>
+
+      <div class="api-panel">
+        <div>
+          <strong>API Integration</strong>
+          <p>API connectivity configuration and testing status.</p>
+        </div>
+        <span class="status-pill warning">Demo Mode</span>
+        <button class="secondary-btn" onclick="testAPI()">Test API Connection</button>
+      </div>
+    </section>
+
+    <!-- FEED MONITORING -->
+    <section class="content-card" id="feed-monitoring">
+      <div class="section-heading">
+        <div>
+          <span class="section-number">05</span>
+          <h2>Feed Monitoring</h2>
+          <p>Track ingestion execution, record counts, delays and failures.</p>
+        </div>
+        <button class="secondary-btn" onclick="refreshFeeds()">↻ Refresh</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Feed ID</th>
+              <th>Source</th>
+              <th>Last Execution</th>
+              <th>Records</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="monitorTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FEED STATUS DASHBOARD -->
+    <section class="content-card" id="feed-dashboard">
+      <div class="section-heading">
+        <div>
+          <span class="section-number">06</span>
+          <h2>Feed Status Dashboard</h2>
+          <p>Consolidated view of ingestion activity and feed execution health.</p>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dashboard-panel">
+          <h3>Feed Status Distribution</h3>
+          <div id="statusDistribution"></div>
+        </div>
+        <div class="dashboard-panel">
+          <h3>Recent Ingestion Activity</h3>
+          <div id="recentActivity"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      REG VISION | Basel IV Regulatory Reporting
+      <span>Data Ingestion Module · Demonstration Environment</span>
+    </footer>
+
+  </main>
+</div>
+
+<!-- SOURCE MODAL -->
+<div class="modal" id="sourceModal">
+  <div class="modal-box">
+    <button class="close-btn" onclick="closeModal('sourceModal')">×</button>
+    <h2>Register Source System</h2>
+    <label>Source System Name</label>
+    <input id="newSourceName" placeholder="e.g. Core Banking System">
+    <label>Category</label>
+    <select id="newSourceCategory">
+      <option>Core Banking</option>
+      <option>Loans</option>
+      <option>Treasury</option>
+      <option>Finance</option>
+      <option>Risk Management</option>
+    </select>
+    <label>Connection Type</label>
+    <select id="newSourceConnection">
+      <option>Database</option>
+      <option>API</option>
+      <option>SFTP</option>
+      <option>File Upload</option>
+    </select>
+    <button class="primary-btn full-btn" onclick="registerSource()">Register Source</button>
+  </div>
+</div>
+
+<!-- FEED MODAL -->
+<div class="modal" id="feedModal">
+  <div class="modal-box">
+    <button class="close-btn" onclick="closeModal('feedModal')">×</button>
+    <h2>Create Data Feed</h2>
+    <label>Feed Name</label>
+    <input id="newFeedName" placeholder="e.g. Loan Exposure Feed">
+    <label>Source System</label>
+    <select id="newFeedSource"></select>
+    <label>Data Format</label>
+    <select id="newFeedFormat">
+      <option>CSV</option>
+      <option>JSON</option>
+      <option>XML</option>
+    </select>
+    <label>Frequency</label>
+    <select id="newFeedFrequency">
+      <option>Daily</option>
+      <option>Weekly</option>
+      <option>Monthly</option>
+    </select>
+    <button class="primary-btn full-btn" onclick="createFeed()">Create Feed</button>
+  </div>
+</div>
+
+<script src="Data-Ingestion-Script.js"></script>
+</body>
+</html>

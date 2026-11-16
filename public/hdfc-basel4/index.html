@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HDFC Bank · Basel IV &amp; RBI Regulatory Reporting Hub</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+  <!-- ======================= LANDING VIEW ======================= -->
+  <div id="screen-landing">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="#top" class="brand">
+          <span class="hdfc-logo"></span>
+          <span>HDFC Bank</span>
+        </a>
+        <nav class="topnav">
+          <a href="#how-it-works">How It Works</a>
+          <a href="#live-snapshot">Daily Snapshot</a>
+          <a href="#governance">RBI Controls</a>
+        </nav>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button type="button" class="btn btn-outline" onclick="openAuth('login', 'rbi-supervisor')">RBI Regulator Sign In</button>
+          <button type="button" class="btn btn-primary" onclick="openAuth('login')">Sign In &rarr;</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero" id="top">
+      <div class="container split-12">
+        <div class="span-7" style="display:flex; flex-direction:column; justify-content:center;">
+          <div class="eyebrow">HDFC Bank &middot; Reserve Bank of India (RBI) Daily Filing</div>
+          <h1>Basel IV Regulatory Reporting Hub</h1>
+          <p class="hero-sub">
+            Centralized daily core banking &amp; treasury feeds, automated data quality checks, Basel IV 72.5% output floor RWA calculations, 3-way GL reconciliation, 5-stage maker-checker sign-off, and Reserve Bank of India supervisory access.
+          </p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:26px;">
+            <button type="button" class="btn btn-primary btn-lg" onclick="openAuth('login')">Sign In to Reporting Hub &rarr;</button>
+            <button type="button" class="btn btn-outline btn-lg" onclick="openAuth('forgot')">Forgot Password (OTP)</button>
+          </div>
+          <div style="margin-top:18px; font-size:12px; color:var(--subtle);">
+            Offline Chrome Compatible (HTML5 / CSS3 / Vanilla JS) &middot; Role-Based Segregation of Duties
+          </div>
+        </div>
+
+        <div class="span-5 card-dark" id="live-snapshot" style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.12);">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span class="hdfc-logo lg"></span>
+                <div>
+                  <div style="font-weight:700; font-size:14px;">Daily RBI Filing Board</div>
+                  <div style="font-size:12px; color:#cbd5e1;" id="landDateSla">14 Nov 2026 &middot; SLA 09:30 IST</div>
+                </div>
+              </div>
+              <span class="mono" style="color:#6ee7b7; font-size:12px; font-weight:700;" id="landCrar">CRAR 17.44%</span>
+            </div>
+
+            <div class="grid grid-2" style="margin-top:20px;">
+              <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:14px;">
+                <div style="font-size:12px; color:#cbd5e1;">CET1 Capital Ratio</div>
+                <div class="mono" style="font-size:21px; font-weight:700; margin-top:4px;" id="landCet1">13.65%</div>
+                <div style="font-size:11px; color:#6ee7b7; margin-top:4px;">RBI Min 8.00% &middot; Compliant</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:14px;">
+                <div style="font-size:12px; color:#cbd5e1;">30-Day Liquidity (LCR)</div>
+                <div class="mono" style="font-size:21px; font-weight:700; margin-top:4px;" id="landLcr">128.69%</div>
+                <div style="font-size:11px; color:#6ee7b7; margin-top:4px;">RBI Min 100.00% &middot; Compliant</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:14px;">
+                <div style="font-size:12px; color:#cbd5e1;">72.5% Output Floor RWA</div>
+                <div class="mono" style="font-size:18px; font-weight:700; margin-top:4px;" id="landRwa">Rs 2,76,983 Cr</div>
+                <div style="font-size:11px; color:#fcd34d; margin-top:4px;">Floor Binding Active</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:14px;">
+                <div style="font-size:12px; color:#cbd5e1;">Certified RBI Vault</div>
+                <div class="mono" style="font-size:18px; font-weight:700; margin-top:4px;" id="landVault">2 Reports</div>
+                <div style="font-size:11px; color:#cbd5e1; margin-top:4px;" id="landBreaks">2 Open Breaks</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.12); display:flex; justify-content:space-between; align-items:center; font-size:12px; color:#cbd5e1;">
+            <span id="landTotalExp">Total Bank Balance Sheet: Rs 4,85,200 Cr</span>
+            <button type="button" style="background:none; border:none; color:#93c5fd; font-weight:600; cursor:pointer; font-size:12px;" onclick="openAuth('login')">Sign In to Workspace &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-strip">
+      <div class="container grid grid-4">
+        <div><div class="text-xs subtle">Daily Bank Records</div><div class="mono" style="font-size:24px; font-weight:700; margin-top:4px;">73,12,690</div><div class="text-xs muted">Finacle CBS, CreditLens, Kondor+ &amp; OFSAA GL</div></div>
+        <div><div class="text-xs subtle">Daily RBI Cutoff SLA</div><div class="mono" style="font-size:24px; font-weight:700; margin-top:4px;">09:30 IST</div><div class="text-xs muted">Zero manual Excel errors</div></div>
+        <div><div class="text-xs subtle">Segregation of Duties</div><div class="mono" style="font-size:24px; font-weight:700; margin-top:4px;">5 Stages</div><div class="text-xs muted">Strict non-colliding Maker-Checker</div></div>
+        <div><div class="text-xs subtle">Audit Traceability</div><div class="mono" style="font-size:24px; font-weight:700; margin-top:4px;">100%</div><div class="text-xs muted">Loan ID to RBI Schedule &amp; Print-to-PDF</div></div>
+      </div>
+    </section>
+
+    <section class="container" id="how-it-works" style="padding:52px 24px;">
+      <div class="eyebrow">6-Step Daily RBI Reporting Pipeline</div>
+      <h2 style="font-size:26px; margin-top:6px;">End-to-End Basel IV Governance</h2>
+      <div class="grid grid-3" style="margin-top:24px;">
+        <div class="card"><strong>01 · Data Ingestion</strong><p class="text-sm muted" style="margin-top:6px;">Core Banking, Treasury &amp; Collateral feeds with CSV template download &amp; bulk Excel paste.</p></div>
+        <div class="card"><strong>02 · Data Quality Check</strong><p class="text-sm muted" style="margin-top:6px;">Automated PAN/LEI, valuation &amp; MTM rules catch breaks before calculation.</p></div>
+        <div class="card"><strong>03 · Basel IV Calculator</strong><p class="text-sm muted" style="margin-top:6px;">Computes CET1, CRAR, 72.5% Output Floor RWA, Leverage, LCR &amp; NSFR.</p></div>
+        <div class="card"><strong>04 · 3-Way GL Match</strong><p class="text-sm muted" style="margin-top:6px;">Matches Risk Engine numbers against Oracle OFSAA General Ledger books.</p></div>
+        <div class="card"><strong>05 · 5-Step Sign-Off</strong><p class="text-sm muted" style="margin-top:6px;">Independent Maker-Checker approvals with zero role collision.</p></div>
+        <div class="card"><strong>06 · RBI Official Portal</strong><p class="text-sm muted" style="margin-top:6px;">Certified Approved/Published vault, Print-to-PDF filings, and RBI queries.</p></div>
+      </div>
+    </section>
+
+    <section id="governance" style="background:#fff; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:48px 0;">
+      <div class="container grid grid-2" style="gap:28px;">
+        <div>
+          <h2 style="font-size:22px;">Confidentiality &amp; Strict Access Controls</h2>
+          <ul style="margin:16px 0 0; padding-left:18px; color:var(--muted); font-size:14px; display:grid; gap:10px;">
+            <li><strong>Confidential Authentication:</strong> Zero prefilled credentials or one-click role switching inside the workspace.</li>
+            <li><strong>Forgot Password with 2-Step OTP:</strong> Official User ID + HDFC Bank / RBI email verification required before reset.</li>
+            <li><strong>Non-Colliding RBAC:</strong> Makers cannot self-approve filings; RBI Supervisors only inspect certified returns.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="font-size:16px; margin-bottom:10px;">RBI Regulatory Coverage</h3>
+          <table>
+            <tbody>
+              <tr><td>Capital Adequacy &amp; Output Floor</td><td class="right mono muted">RBI-RCA3-B4</td></tr>
+              <tr><td>Liquidity Coverage &amp; NSFR</td><td class="right mono muted">RBI-BLR1-LCR</td></tr>
+              <tr><td>Leverage Ratio Statement</td><td class="right mono muted">RBI-LR1-LEV</td></tr>
+              <tr><td>Certified Filing Export</td><td class="right mono muted">Print-to-PDF (Signed-Off)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer style="background:#fff; padding:20px 0;">
+      <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:12px; color:var(--subtle);">
+        <span>HDFC Bank &middot; Basel IV Regulatory Reporting Hub &middot; Regulated by Reserve Bank of India (RBI)</span>
+        <span>Pure HTML5, CSS3 &amp; Vanilla JS &middot; Offline Chrome File Explorer Ready</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ======================= AUTHENTICATION SCREEN ======================= -->
+  <div id="screen-auth" class="hidden" style="min-height:100vh; display:flex; flex-direction:column;">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="#top" onclick="backToLanding(); return false;" class="brand">
+          <span class="hdfc-logo"></span>
+          <span>HDFC Bank</span>
+        </a>
+        <button type="button" class="btn btn-outline btn-sm" onclick="backToLanding()">&larr; Back to Overview</button>
+      </div>
+    </header>
+
+    <main class="container" style="flex:1; display:flex; align-items:center; justify-content:center; padding:32px 24px;">
+      <div class="card split-12" style="padding:0; overflow:hidden; width:100%; max-width:980px; gap:0;">
+        <div class="span-7" style="padding:32px; border-right:1px solid var(--border);">
+          <div class="eyebrow" style="margin-bottom:12px;">Confidential Banking Access</div>
+          <div class="tabs" style="margin-bottom:22px;">
+            <button type="button" class="tab-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">Sign In</button>
+            <button type="button" class="tab-btn" id="tabBtnForgot" onclick="switchAuthTab('forgot')">Forgot Password</button>
+            <button type="button" class="tab-btn" id="tabBtnRegister" onclick="switchAuthTab('register')">Register User</button>
+            <button type="button" class="tab-btn" id="tabBtnPassword" onclick="switchAuthTab('password')">Change Password</button>
+          </div>
+
+          <!-- 1. SIGN IN -->
+          <form id="formLogin" onsubmit="submitLogin(event)">
+            <h1 style="font-size:22px;">Sign in to HDFC Bank Basel IV Hub</h1>
+            <p class="text-xs muted" style="margin-top:6px;">Enter your confidential User ID (or Official Email) and Password. Switching roles requires signing out and logging in with stakeholder credentials.</p>
+            <div id="loginMsg" class="alert-box alert-red hidden" style="margin-top:12px;"></div>
+
+            <div style="margin-top:16px;">
+              <label class="fl" for="loginUserId">User ID or Official Email</label>
+              <input type="text" id="loginUserId" class="mono" placeholder="Enter assigned User ID or Email" autocomplete="username" required />
+            </div>
+            <div style="margin-top:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label class="fl" for="loginPassword">Password</label>
+                <button type="button" style="background:none; border:none; color:var(--blue); font-size:12px; font-weight:600; cursor:pointer; padding-bottom:4px;" onclick="switchAuthTab('forgot')">Forgot Password?</button>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <input type="password" id="loginPassword" placeholder="Enter confidential password" autocomplete="current-password" required />
+                <button type="button" class="btn btn-outline btn-sm" onclick="togglePwd('loginPassword', this)">Show</button>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%; margin-top:20px; padding:12px;">Sign In Securely &rarr;</button>
+          </form>
+
+          <!-- 2. FORGOT PASSWORD (2-STEP OTP) -->
+          <div id="formForgot" class="hidden">
+            <h1 style="font-size:22px;">Reset Password via Official OTP</h1>
+            <p class="text-xs muted" style="margin-top:6px;">Step 1: Verify your User ID and registered @hdfcbank.com / @rbi.org.in email. Step 2: Enter the 6-digit OTP to set a new password.</p>
+            <div id="forgotMsg" class="alert-box hidden" style="margin-top:12px;"></div>
+
+            <form id="forgotStep1" onsubmit="requestResetOtp(event)" style="margin-top:14px;">
+              <div>
+                <label class="fl" for="fpUserId">User ID</label>
+                <input type="text" id="fpUserId" class="mono" placeholder="e.g. HDFC-RPT-1042" required />
+              </div>
+              <div style="margin-top:12px;">
+                <label class="fl" for="fpEmail">Registered Official Email</label>
+                <input type="email" id="fpEmail" placeholder="name@hdfcbank.com or name@rbi.org.in" required />
+              </div>
+              <button type="submit" class="btn btn-blue" style="width:100%; margin-top:14px;">Verify Identity &amp; Generate 6-Digit OTP</button>
+            </form>
+
+            <form id="forgotStep2" class="hidden" onsubmit="confirmOtpReset(event)" style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border);">
+              <div>
+                <label class="fl" for="fpOtp">6-Digit Verification OTP</label>
+                <input type="text" id="fpOtp" class="mono" maxlength="6" placeholder="Enter 6-digit OTP" required />
+              </div>
+              <div class="grid grid-2" style="margin-top:12px;">
+                <div>
+                  <label class="fl" for="fpNewPwd">New Password (min 8 chars)</label>
+                  <input type="password" id="fpNewPwd" required />
+                </div>
+                <div>
+                  <label class="fl" for="fpConfirmPwd">Confirm New Password</label>
+                  <input type="password" id="fpConfirmPwd" required />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width:100%; margin-top:14px;">Verify OTP &amp; Reset Password</button>
+            </form>
+          </div>
+
+          <!-- 3. REGISTER USER -->
+          <form id="formRegister" class="hidden" onsubmit="submitRegister(event)">
+            <h1 style="font-size:22px;">Register New Stakeholder</h1>
+            <p class="text-xs muted" style="margin-top:6px;">Provision an HDFC Bank or RBI supervisory account with strict RBAC role boundaries.</p>
+            <div id="regMsg" class="alert-box hidden" style="margin-top:12px;"></div>
+            <div class="grid grid-2" style="margin-top:14px;">
+              <div><label class="fl">Full Name</label><input type="text" id="regName" placeholder="e.g. Karthik Rao" required /></div>
+              <div><label class="fl">Employee / User ID</label><input type="text" id="regUserId" class="mono" placeholder="HDFC-DQA-2099" required /></div>
+            </div>
+            <div class="grid grid-2" style="margin-top:12px;">
+              <div><label class="fl">Official Email</label><input type="email" id="regEmail" placeholder="name@hdfcbank.com" required /></div>
+              <div><label class="fl">Assign RBAC Role</label><select id="regRole"></select></div>
+            </div>
+            <div class="grid grid-2" style="margin-top:12px;">
+              <div><label class="fl">Password (min 8 chars)</label><input type="password" id="regPwd" required /></div>
+              <div><label class="fl">Confirm Password</label><input type="password" id="regPwd2" required /></div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%; margin-top:16px;">Create Account &amp; Assign Role</button>
+          </form>
+
+          <!-- 4. CHANGE PASSWORD -->
+          <form id="formPassword" class="hidden" onsubmit="submitChangePwd(event)">
+            <h1 style="font-size:22px;">Change Account Password</h1>
+            <p class="text-xs muted" style="margin-top:6px;">Current password verification is mandatory for all credential updates.</p>
+            <div id="pwdMsg" class="alert-box hidden" style="margin-top:12px;"></div>
+            <div style="margin-top:14px;"><label class="fl">User ID</label><input type="text" id="cpUserId" class="mono" placeholder="Enter your User ID" required /></div>
+            <div style="margin-top:12px;"><label class="fl">Current Password</label><input type="password" id="cpCurrent" placeholder="Enter current password" required /></div>
+            <div class="grid grid-2" style="margin-top:12px;">
+              <div><label class="fl">New Password (min 8 chars)</label><input type="password" id="cpNew" required /></div>
+              <div><label class="fl">Confirm New Password</label><input type="password" id="cpNew2" required /></div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%; margin-top:16px;">Verify &amp; Save Password</button>
+          </form>
+        </div>
+
+        <div class="span-5" style="padding:32px; background:#f8fafc; display:flex; flex-direction:column; justify-content:space-between; gap:18px;">
+          <div>
+            <span class="badge badge-info">Security &amp; Confidentiality Policy</span>
+            <h2 style="font-size:17px; margin-top:12px;">Zero Credential Exposure</h2>
+            <p class="text-sm muted" style="margin-top:8px;">
+              All stakeholder credentials are confidential and are never pre-filled or displayed on screen. Each stakeholder must authenticate individually using their assigned HDFC Bank or RBI credentials.
+            </p>
+            <div class="card" style="margin-top:16px; padding:14px;">
+              <div style="font-weight:700; font-size:12px; margin-bottom:6px;">Strict Segregation of Duties</div>
+              <ul style="margin:0; padding-left:16px; font-size:12px; color:var(--muted); display:grid; gap:6px;">
+                <li>Makers cannot approve their own regulatory returns.</li>
+                <li>IT Admins govern RBAC &amp; users without self-approving filings.</li>
+                <li>RBI Supervisors access only certified Approved / Published reports.</li>
+                <li>No role-switching dropdowns inside the workspace.</li>
+              </ul>
+            </div>
+          </div>
+          <div style="font-size:11px; color:var(--subtle);">
+            HDFC Bank Enterprise Identity &amp; RBI Supervisory Gateway
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="./js/store.js"></script>
+  <script src="./js/auth.js"></script>
+</body>
+</html>

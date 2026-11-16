@@ -1,0 +1,6 @@
+{
+  "name": "Bharat National Bank — Basel IV Regulatory Reporting Hub",
+  "description": "Daily Basel IV regulatory reporting, capital and RWA calculation, GL reconciliation, maker-checker governance, and Reserve Bank of India (RBI) supervisory portal for Bharat National Bank.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

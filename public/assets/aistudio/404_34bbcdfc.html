@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | BaselTrack</title><link rel="icon" href="images/logo.png"><link rel="stylesheet" href="css/workspace.css">
+<style>body{display:grid;place-items:center;min-height:100vh;padding:20px;text-align:center}.b{max-width:480px}.b img{width:84px}.n{font:800 92px Manrope,sans-serif;color:var(--primary);line-height:1}.b h1{font:800 26px Manrope,sans-serif;margin:8px 0}.b p{color:var(--muted)}.b code{background:var(--surface-alt);padding:2px 8px;border-radius:6px;word-break:break-all}.r{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}.btn{text-decoration:none;display:inline-block}</style></head>
+<body><main class="b"><img src="images/logo.png" alt="BaselTrack"><div class="n" id="c">404</div><h1 id="t">We can't find that page</h1><p id="m">The link may be wrong, or the page was moved.</p><p id="f" hidden>Requested: <code id="p"></code></p>
+<div class="r"><a class="btn" id="h" href="index.html">Go to sign in</a><button class="btn g" id="bk">Go back</button></div></main>
+<script>
+var q=new URLSearchParams(location.search),from=q.get('from'),code=q.get('code');
+if(from){document.getElementById('p').textContent=from.slice(0,120);document.getElementById('f').hidden=false}
+if(code==='500'){document.getElementById('c').textContent='500';document.getElementById('t').textContent='Something went wrong';document.getElementById('m').textContent='This page could not be displayed. Go back to the dashboard and try again.'}
+try{var s=JSON.parse(localStorage.getItem('bt.sess'));if(s){var h=document.getElementById('h');h.href='workspace.html#dashboard';h.textContent='Go to dashboard'}}catch(x){}
+document.getElementById('bk').onclick=function(){history.length>1?history.back():location.href='index.html'};
+</script></body></html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HDFC Bank · Basel IV &amp; RBI Regulatory Workspace</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+  <div class="ws-shell">
+    <!-- SIDEBAR -->
+    <aside class="ws-sidebar">
+      <div class="ws-brand">
+        <span class="hdfc-logo"></span>
+        <div>
+          <strong>HDFC Bank</strong>
+          <small>Basel IV &amp; RBI Hub</small>
+        </div>
+      </div>
+      <nav class="ws-nav" id="wsNav"></nav>
+      <div class="ws-side-footer">
+        <div style="font-weight:700; color:#fff;" id="sideUserName"></div>
+        <div style="font-size:11px; color:#93c5fd;" id="sideUserRole"></div>
+      </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <div class="ws-main">
+      <header class="ws-topbar">
+        <div>
+          <div class="text-xs subtle" id="topBreadcrumb">HDFC Bank / Basel IV Workspace</div>
+          <h2 id="topViewTitle" style="font-size:18px; margin-top:2px;">Overview</h2>
+        </div>
+        <div class="ws-topbar-right">
+          <span class="role-badge-readonly" id="readonlyRoleBadge"></span>
+          <button type="button" class="btn btn-outline btn-sm" onclick="HDFCWorkspace.openPasswordModal()">Change Password</button>
+          <button type="button" class="btn btn-danger-outline btn-sm" onclick="HDFCWorkspace.signOut()">Sign Out</button>
+        </div>
+      </header>
+
+      <main class="ws-content" id="wsContent"></main>
+    </div>
+  </div>
+
+  <!-- PASSWORD CHANGE MODAL (Verifies Current Password) -->
+  <div class="modal-backdrop" id="pwdModal">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3 style="font-size:17px;">Change Account Password</h3>
+        <button type="button" class="btn btn-outline btn-sm" onclick="HDFCWorkspace.closePasswordModal()">Close</button>
+      </div>
+      <div id="wsPwdMsg" class="alert-box hidden" style="margin-bottom:12px;"></div>
+      <form onsubmit="HDFCWorkspace.savePasswordChange(event)" style="display:grid; gap:12px;">
+        <div>
+          <label class="fl">Current Password</label>
+          <input type="password" id="wsCurrPwd" required />
+        </div>
+        <div>
+          <label class="fl">New Password (min 8 chars)</label>
+          <input type="password" id="wsNewPwd" required />
+        </div>
+        <div>
+          <label class="fl">Confirm New Password</label>
+          <input type="password" id="wsNewPwd2" required />
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:4px;">
+          <button type="button" class="btn btn-outline" onclick="HDFCWorkspace.closePasswordModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Verify &amp; Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- GENERIC MODAL (For Raising Queries / Creating Reports / Adding Users) -->
+  <div class="modal-backdrop" id="actionModal">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3 style="font-size:17px;" id="actionModalTitle">Action</h3>
+        <button type="button" class="btn btn-outline btn-sm" onclick="HDFCWorkspace.closeActionModal()">Close</button>
+      </div>
+      <div id="actionModalBody"></div>
+    </div>
+  </div>
+
+  <!-- DEDICATED PRINT-TO-PDF REGULATORY FILING PACK (Shown ONLY when window.print() triggers for Signed-Off Reports) -->
+  <section id="printReportSheet"></section>
+
+  <div class="toast-box" id="wsToast"></div>
+
+  <script src="./js/store.js"></script>
+  <script src="./js/workspace.js"></script>
+</body>
+</html>

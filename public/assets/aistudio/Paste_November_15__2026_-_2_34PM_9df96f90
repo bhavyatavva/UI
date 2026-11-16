@@ -1,0 +1,1216 @@
+index. html
+------------------------------------------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10243a">
+  <title>REG VISION | Basel IV Regulatory Reporting</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">RV</div>
+        <div><strong>REG VISION</strong><small>Regulatory Reporting Platform</small></div>
+      </div>
+      <div class="nav-caption">WORKSPACE</div>
+      <nav id="navigation">
+        <button class="nav-link active" data-page="dashboard">▦ <span>Executive Dashboard</span></button>
+        <button class="nav-link" data-page="ingestion">⇧ <span>Data Ingestion</span></button>
+        <button class="nav-link" data-page="quality">✓ <span>Data Quality & Validation</span></button>
+        <button class="nav-link" data-page="calculations">∑ <span>Basel IV Calculations</span></button>
+        <button class="nav-link" data-page="reconciliation">⇄ <span>Reconciliation</span></button>
+        <button class="nav-link" data-page="reports">▤ <span>Regulatory Reports</span></button>
+        <button class="nav-link" data-page="approvals">☑ <span>Workflow & Approvals</span></button>
+        <button class="nav-link" data-page="regulator">▣ <span>Regulator Portal</span></button>
+        <button class="nav-link" data-page="audit">◷ <span>Audit & Data Lineage</span></button>
+        <button class="nav-link" data-page="exceptions">⚑ <span>Exception Management</span></button>
+        <button class="nav-link" data-page="notifications">♢ <span>Notifications</span></button>
+        <button class="nav-link" data-page="queries">? <span>Regulatory Queries</span></button>
+        <button class="nav-link" data-page="configuration">⚙ <span>Configuration</span></button>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="online-dot"></span> Demo environment
+        <small>REG VISION · Team 03</small>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-button mobile-menu" id="menuToggle">☰</button>
+          <div>
+            <div class="breadcrumb">REG VISION / <span id="breadcrumb">Dashboard</span></div>
+            <div class="topbar-title">Basel IV Regulatory Reporting</div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="icon-button" id="notificationButton" title="Notifications">
+            ♢ <span id="notificationDot" class="notification-dot"></span>
+          </button>
+          <div class="role-control">
+            <label for="roleSelector">DEMO ROLE</label>
+            <select id="roleSelector"></select>
+          </div>
+          <div class="profile">
+            <div class="avatar" id="userAvatar">RA</div>
+            <div><strong id="userName">Demo User</strong><small id="userRole">Regulatory Administrator</small></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="content" id="appContent" aria-live="polite"></section>
+      <footer class="page-footer">REG VISION · Basel IV Regulatory Reporting · Illustrative demonstration environment</footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header class="modal-header">
+        <h2 id="modalTitle">Details</h2>
+        <button class="icon-button" id="modalClose" aria-label="Close">×</button>
+      </header>
+      <div class="modal-body" id="modalBody"></div>
+      <footer class="modal-actions" id="modalActions"></footer>
+    </section>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="app.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+File 2 — styles.css
+-------------------------------------------------------------
+
+:root {
+  --navy:#10243a;
+  --navy2:#193b56;
+  --teal:#0e8f8b;
+  --teal-light:#e7f5f3;
+  --ink:#243447;
+  --muted:#748296;
+  --line:#e5eaf0;
+  --white:#fff;
+  --canvas:#f4f7fa;
+  --green:#16845b;
+  --red:#c94d55;
+  --amber:#b7791f;
+  --shadow:0 5px 20px rgba(16,36,58,.055);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:14px}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app-shell{min-height:100vh;display:flex}
+.sidebar{width:258px;background:var(--navy);color:#d9e5ef;display:flex;flex-direction:column;flex-shrink:0;min-height:100vh;padding:22px 14px 16px}
+.brand{display:flex;gap:11px;align-items:center;padding:0 10px 28px}
+.brand-mark{width:39px;height:39px;border-radius:11px;display:grid;place-items:center;background:var(--teal);color:white;font-weight:800}
+.brand strong{display:block;color:white;font-size:15px;letter-spacing:1px}
+.brand small{display:block;color:#9db0c1;margin-top:4px;font-size:10px}
+.nav-caption{color:#8196a9;font-size:10px;font-weight:700;letter-spacing:1.5px;padding:0 12px 10px}
+#navigation{display:grid;gap:4px}
+.nav-link{border:0;background:transparent;color:#c3d0dc;text-align:left;padding:11px 12px;border-radius:8px;display:flex;align-items:center;gap:12px;font-size:12.5px;transition:.18s;width:100%}
+.nav-link span{flex:1}
+.nav-link:hover{background:#1c3b56;color:white}
+.nav-link.active{color:white;background:#24516a;box-shadow:inset 3px 0 var(--teal)}
+.sidebar-footer{margin-top:auto;padding:18px 10px 0;border-top:1px solid #2b4358;color:#b5c5d3;font-size:11px}
+.sidebar-footer small{display:block;color:#8298aa;margin-top:8px}
+.online-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#37c78b;margin-right:6px}
+.main-area{min-width:0;flex:1;display:flex;flex-direction:column}
+.topbar{min-height:76px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:12px 30px;gap:16px}
+.topbar-left,.topbar-right,.profile{display:flex;align-items:center;gap:14px}
+.breadcrumb{font-size:10px;color:#8794a4;margin-bottom:5px}
+.breadcrumb span{color:var(--teal);font-weight:700}
+.topbar-title{font-weight:700;font-size:15px;color:var(--navy)}
+.role-control{display:grid;gap:3px}
+.role-control label{font-size:9px;color:var(--muted)}
+.role-control select{border:0;color:var(--navy);font-weight:600;max-width:210px;outline:none;background:white;font-size:11px}
+.profile{border-left:1px solid var(--line);padding-left:14px}
+.profile strong{display:block;font-size:11px}
+.profile small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#e2f0ef;color:#087a76;font-weight:800;font-size:11px}
+.icon-button{border:0;background:transparent;color:var(--navy);font-size:19px;padding:7px;position:relative}
+.notification-dot{position:absolute;width:7px;height:7px;background:#e15c61;border-radius:50%;top:5px;right:5px}
+.mobile-menu{display:none}
+.content{padding:26px 30px 36px;flex:1;min-width:0}
+.page-footer{padding:14px 30px;color:#91a0af;font-size:10px;border-top:1px solid var(--line);background:#fff}
+.page-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:22px}
+.page-heading h1{font-size:23px;color:var(--navy);margin:0 0 7px}
+.page-heading p{color:var(--muted);margin:0;line-height:1.5;font-size:12px}
+.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid transparent;border-radius:7px;padding:9px 13px;font-size:11px;font-weight:700;transition:.15s}
+.btn-primary{background:var(--teal);color:white}
+.btn-primary:hover{background:#087b78}
+.btn-secondary{background:white;border-color:var(--line);color:var(--ink)}
+.btn-secondary:hover{background:#f5f8fa}
+.btn-danger{background:#fff0f0;color:var(--red);border-color:#f4d5d7}
+.btn-success{background:#e9f7f0;color:var(--green);border-color:#ccebdc}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.kpi-card,.panel,.table-panel,.chart-panel{background:white;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
+.kpi-card{padding:17px}
+.kpi-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px}
+.kpi-icon{width:30px;height:30px;display:grid;place-items:center;background:var(--teal-light);border-radius:8px;color:var(--teal);font-size:15px}
+.kpi-value{font-size:27px;font-weight:750;color:var(--navy);margin:12px 0 5px}
+.kpi-foot{font-size:10px;color:var(--muted)}
+.kpi-foot.positive{color:var(--green)}
+.dashboard-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;margin-bottom:18px}
+.panel,.chart-panel{padding:18px}
+.panel-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;gap:10px}
+.panel-heading h3{font-size:13px;margin:0;color:var(--navy)}
+.panel-heading small{color:var(--muted);font-size:10px}
+.chart-wrap{height:220px;position:relative}
+.table-panel{overflow:hidden;margin-top:16px}
+.table-heading{padding:17px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.table-heading h3{margin:0;font-size:13px;color:var(--navy)}
+.table-wrap{overflow:auto}
+table{border-collapse:collapse;width:100%;min-width:650px}
+th{background:#f7f9fb;color:#78879a;text-transform:uppercase;letter-spacing:.5px;font-size:9px;font-weight:700;text-align:left;padding:12px 15px;white-space:nowrap}
+td{padding:13px 15px;border-top:1px solid #edf0f3;font-size:11px;color:#405064;vertical-align:middle}
+tr:hover td{background:#fbfcfd}
+.status{display:inline-flex;padding:5px 8px;border-radius:20px;font-size:9px;font-weight:700;white-space:nowrap;background:#edf1f5;color:#637386}
+.status.success,.status.approved,.status.published,.status.resolved,.status.closed,.status.completed{background:#e8f6ef;color:#16845b}
+.status.failed,.status.rejected,.status.critical,.status.overdue{background:#fff0f0;color:#c94d55}
+.status.warning,.status.pending,.status.in-progress,.status.under-review{background:#fff5e5;color:#a56b15}
+.status.info,.status.draft,.status.generated,.status.open,.status.assigned{background:#eaf2fa;color:#3d6e9d}
+.status.neutral{background:#edf0f3;color:#687789}
+.filters{display:flex;gap:8px;flex-wrap:wrap;padding:0 18px 15px}
+.field{display:grid;gap:6px;margin-bottom:13px;min-width:0}
+.field label{font-size:10px;color:#607084;font-weight:700}
+.field input,.field select,.field textarea,.filters input,.filters select{border:1px solid #dfe5eb;border-radius:6px;padding:9px 10px;background:white;color:var(--ink);font-size:11px;min-width:0;width:100%;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus,.filters input:focus,.filters select:focus{border-color:var(--teal);box-shadow:0 0 0 2px #0e8f8b18}
+.field textarea{min-height:85px;resize:vertical}
+.filters input,.filters select{width:auto;min-width:150px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.form-grid .full{grid-column:1/-1}
+.empty-state{text-align:center;padding:35px 20px;color:var(--muted);font-size:12px}
+.empty-state strong{display:block;color:var(--navy);margin-bottom:7px;font-size:13px}
+.info-banner{padding:12px 14px;border:1px solid #d9e9ed;background:#f1f8fa;border-radius:7px;color:#426678;font-size:11px;line-height:1.6;margin-bottom:15px}
+.warning-banner{padding:12px 14px;border:1px solid #f1dfbd;background:#fff9ed;border-radius:7px;color:#8a641e;font-size:11px;line-height:1.6;margin-bottom:15px}
+.metric-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+.metric-chip{padding:8px 11px;background:#fff;border:1px solid var(--line);border-radius:7px;font-size:10px;color:var(--muted)}
+.metric-chip strong{color:var(--navy);margin-left:4px}
+.action-group{display:flex;gap:6px;flex-wrap:wrap}
+.action-btn{border:0;background:transparent;color:var(--teal);font-size:10px;font-weight:700;padding:4px}
+.action-btn:hover{text-decoration:underline}
+.progress{height:7px;border-radius:10px;background:#edf1f4;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--teal);border-radius:10px}
+.modal-backdrop{display:none;position:fixed;inset:0;background:#0b1c2dcc;z-index:20;align-items:center;justify-content:center;padding:18px}
+.modal-backdrop.open{display:flex}
+.modal{width:min(620px,100%);max-height:90vh;overflow:auto;background:white;border-radius:12px;box-shadow:0 20px 60px #0003}
+.modal-header{display:flex;justify-content:space-between;align-items:center;padding:17px 20px;border-bottom:1px solid var(--line)}
+.modal-header h2{font-size:15px;color:var(--navy);margin:0}
+.modal-body{padding:20px}
+.modal-actions{padding:14px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px}
+.toast-container{position:fixed;right:20px;bottom:20px;z-index:50;display:grid;gap:8px}
+.toast{background:var(--navy);color:white;padding:12px 16px;border-radius:7px;box-shadow:var(--shadow);font-size:11px;max-width:340px}
+.toast.error{background:#a93d46}
+.toast.success{background:#176d51}
+.muted{color:var(--muted)}
+.small{font-size:10px}
+.text-right{text-align:right}
+.inline-actions{display:flex;gap:6px;align-items:center}
+.lineage{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:20px;background:#f8fafb;border:1px solid var(--line);border-radius:8px}
+.lineage span{background:white;border:1px solid var(--line);padding:10px;border-radius:6px;font-size:10px;font-weight:700;color:var(--navy)}
+.lineage b{color:var(--teal)}
+@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.content{padding:22px}.topbar{padding:12px 22px}}
+@media(max-width:760px){
+ .sidebar{position:fixed;z-index:15;left:-270px;top:0;bottom:0;transition:left .2s;overflow:auto}
+ .sidebar.open{left:0;box-shadow:10px 0 35px #0003}
+ .mobile-menu{display:block}
+ .topbar{padding:10px 14px}
+ .topbar-right{gap:5px}
+ .profile{display:none}
+ .role-control select{max-width:125px}
+ .content{padding:18px 13px}
+ .page-heading{flex-direction:column}
+ .dashboard-grid{grid-template-columns:1fr}
+ .kpi-grid{gap:9px}
+ .kpi-card{padding:13px}
+ .kpi-value{font-size:23px}
+ .form-grid{grid-template-columns:1fr}
+ .form-grid .full{grid-column:auto}
+ .page-footer{padding:12px}
+}
+@media(max-width:420px){.kpi-grid{grid-template-columns:1fr 1fr}.kpi-value{font-size:20px}.topbar-title{font-size:12px}.breadcrumb{font-size:9px}}
+
+
+
+
+
+
+File 3 — app.js
+--------------------------------------------------------------------------------------
+
+
+"use strict";
+
+/* =========================================================
+   REG VISION - BASEL IV REGULATORY REPORTING
+   Frontend demonstration only. No real bank integrations.
+========================================================= */
+
+const MODULES = [
+  ["dashboard", "Executive Dashboard"],
+  ["ingestion", "Data Ingestion"],
+  ["quality", "Data Quality & Validation"],
+  ["calculations", "Basel IV Calculations"],
+  ["reconciliation", "Reconciliation"],
+  ["reports", "Regulatory Reports"],
+  ["approvals", "Workflow & Approvals"],
+  ["regulator", "Regulator Portal"],
+  ["audit", "Audit & Data Lineage"],
+  ["exceptions", "Exception Management"],
+  ["notifications", "Notifications"],
+  ["queries", "Regulatory Queries"],
+  ["configuration", "Configuration"]
+];
+
+const ROLES = [
+  "Regulatory Administrator",
+  "Data Quality Analyst",
+  "Data Operational Analyst",
+  "Risk Analyst",
+  "Finance Approver",
+  "Auditor",
+  "Compliance Officer",
+  "Regulatory Reporting Analyst",
+  "Reporting Manager",
+  "Regulator / Supervisory User"
+];
+
+const ACCESS = {
+  "Regulatory Administrator": MODULES.map(x => x[0]),
+  "Data Quality Analyst": ["dashboard","ingestion","quality","exceptions","notifications","audit"],
+  "Data Operational Analyst": ["dashboard","ingestion","exceptions","notifications","audit"],
+  "Risk Analyst": ["dashboard","calculations","reconciliation","quality","exceptions","notifications","audit"],
+  "Finance Approver": ["dashboard","reconciliation","reports","approvals","notifications","audit"],
+  "Auditor": ["dashboard","reports","approvals","regulator","audit","exceptions","queries"],
+  "Compliance Officer": ["dashboard","reports","approvals","regulator","audit","exceptions","queries","notifications"],
+  "Regulatory Reporting Analyst": ["dashboard","quality","calculations","reconciliation","reports","approvals","exceptions","notifications","queries","audit"],
+  "Reporting Manager": ["dashboard","reports","approvals","regulator","exceptions","queries","notifications","audit"],
+  "Regulator / Supervisory User": ["dashboard","regulator","queries"]
+};
+
+const $ = selector => document.querySelector(selector);
+const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+
+const today = () => new Date().toISOString().slice(0,10);
+const stamp = () => new Date().toLocaleString();
+const makeId = prefix => prefix + "-" + Date.now().toString().slice(-7) + Math.floor(Math.random()*90+10);
+const money = value => Number(value || 0).toLocaleString("en-IN",{maximumFractionDigits:2});
+const statusClass = value => String(value || "neutral").toLowerCase().replaceAll(" ","-");
+
+const seedData = {
+  sources: [
+    {id:"SRC-001",name:"Core Banking System",type:"Database",owner:"Operations",status:"Active"},
+    {id:"SRC-002",name:"General Ledger",type:"Database",owner:"Finance",status:"Active"},
+    {id:"SRC-003",name:"Risk Management Platform",type:"API",owner:"Risk Team",status:"Active"},
+    {id:"SRC-004",name:"Treasury System",type:"File",owner:"Treasury",status:"Active"}
+  ],
+  feeds: [
+    {id:"FEED-001",name:"Daily GL Feed",source:"SRC-002",frequency:"Daily",format:"CSV",status:"Completed",lastRun:today(),records:12500},
+    {id:"FEED-002",name:"Credit Risk Feed",source:"SRC-003",frequency:"Daily",format:"API",status:"Completed",lastRun:today(),records:8200},
+    {id:"FEED-003",name:"Treasury Positions",source:"SRC-004",frequency:"Daily",format:"CSV",status:"Failed",lastRun:today(),records:0}
+  ],
+  runs: [
+    {id:"RUN-001",feed:"FEED-001",date:stamp(),status:"Completed",records:12500,message:"Demo ingestion completed"},
+    {id:"RUN-002",feed:"FEED-002",date:stamp(),status:"Completed",records:8200,message:"Demo API ingestion completed"},
+    {id:"RUN-003",feed:"FEED-003",date:stamp(),status:"Failed",records:0,message:"Simulated source connection failure"}
+  ],
+  validations: [
+    {id:"VAL-001",rule:"Mandatory customer identifier",area:"Credit Risk",severity:"Critical",status:"Open",details:"Customer identifier missing in sample records",owner:"Data Quality Analyst"},
+    {id:"VAL-002",rule:"Currency format check",area:"General Ledger",severity:"Warning",status:"Resolved",details:"Currency code format corrected",owner:"Data Quality Analyst"},
+    {id:"VAL-003",rule:"Duplicate exposure reference",area:"Credit Risk",severity:"High",status:"Open",details:"Duplicate exposure reference detected",owner:"Risk Analyst"}
+  ],
+  calculations: [
+    {id:"CAL-001",type:"Credit Risk",period:"2026-Q3",version:"1.0",status:"Completed",output:125000000},
+    {id:"CAL-002",type:"Market Risk",period:"2026-Q3",version:"1.0",status:"Completed",output:42000000},
+    {id:"CAL-003",type:"Operational Risk",period:"2026-Q3",version:"1.0",status:"Pending",output:0}
+  ],
+  reconciliations: [
+    {id:"REC-001",name:"GL vs Regulatory Data",period:"2026-Q3",expected:125000000,actual:124500000,status:"Mismatch",owner:"Finance"},
+    {id:"REC-002",name:"Risk vs Reporting Data",period:"2026-Q3",expected:85000000,actual:85000000,status:"Matched",owner:"Risk Team"}
+  ],
+  reports: [
+    {id:"RPT-001",name:"Capital Adequacy Report",period:"2026-Q3",entity:"Demo Bank",status:"Under Review",owner:"Reporting Analyst",published:false},
+    {id:"RPT-002",name:"Credit Risk Exposure Report",period:"2026-Q3",entity:"Demo Bank",status:"Approved",owner:"Reporting Analyst",published:false},
+    {id:"RPT-003",name:"Leverage Ratio Report",period:"2026-Q2",entity:"Demo Bank",status:"Published",owner:"Reporting Analyst",published:true}
+  ],
+  exceptions: [
+    {id:"EXC-001",title:"Treasury feed failure",category:"Feed Failure",severity:"High",priority:"High",status:"Open",assignee:"Data Operational Analyst",details:"Treasury feed did not complete successfully",created:today()},
+    {id:"EXC-002",title:"GL reconciliation mismatch",category:"Reconciliation",severity:"Medium",priority:"Medium",status:"In Progress",assignee:"Finance Approver",details:"Expected and actual amounts differ",created:today()}
+  ],
+  queries: [
+    {id:"QRY-001",report:"Capital Adequacy Report",period:"2026-Q3",category:"Capital",priority:"High",owner:"Compliance Officer",status:"Received",question:"Please provide supporting evidence for the reported capital figure.",response:"",due:today()}
+  ],
+  notifications: [
+    {id:"NTF-001",title:"Treasury feed failed",message:"The Treasury Positions feed requires investigation.",severity:"Critical",read:false,date:stamp(),module:"ingestion"},
+    {id:"NTF-002",title:"Approval pending",message:"Capital Adequacy Report is awaiting review.",severity:"Medium",read:false,date:stamp(),module:"approvals"}
+  ],
+  audit: [],
+  config: [
+    {id:"CFG-001",type:"Reporting Calendar",name:"Quarterly reporting cycle",value:"Quarterly",status:"Active"},
+    {id:"CFG-002",type:"Validation Rule",name:"Mandatory field validation",value:"Enabled",status:"Active"},
+    {id:"CFG-003",type:"Reconciliation Tolerance",name:"Default tolerance",value:"0.5%",status:"Active"}
+  ]
+};
+
+let db;
+let activeRole = localStorage.getItem("rv_role") || "Regulatory Administrator";
+let currentPage = "dashboard";
+let chartInstances = [];
+
+function loadData() {
+  try {
+    const saved = localStorage.getItem("regVisionData");
+    db = saved ? JSON.parse(saved) : structuredClone(seedData);
+  } catch {
+    db = structuredClone(seedData);
+  }
+  Object.keys(seedData).forEach(key => {
+    if (!Array.isArray(db[key])) db[key] = structuredClone(seedData[key]);
+  });
+  saveData();
+}
+
+function saveData() {
+  localStorage.setItem("regVisionData", JSON.stringify(db));
+}
+
+function log(action,module,reference,details="") {
+  db.audit.unshift({
+    id:makeId("AUD"),
+    user:activeRole,
+    action,
+    module,
+    reference,
+    details,
+    date:stamp()
+  });
+  saveData();
+}
+
+function notify(title,message,severity="Medium",module=currentPage) {
+  db.notifications.unshift({
+    id:makeId("NTF"),title,message,severity,
+    read:false,date:stamp(),module
+  });
+  saveData();
+  updateNotificationDot();
+}
+
+function toast(message,type="success") {
+  const el=document.createElement("div");
+  el.className="toast "+type;
+  el.textContent=message;
+  $("#toastContainer").appendChild(el);
+  setTimeout(()=>el.remove(),3500);
+}
+
+function canAccess(page) {
+  return (ACCESS[activeRole] || []).includes(page);
+}
+
+function updateNotificationDot() {
+  const unread=db.notifications.filter(n=>!n.read).length;
+  $("#notificationDot").style.display=unread ? "block":"none";
+}
+
+function status(value) {
+  return `<span class="status ${statusClass(value)}">${esc(value)}</span>`;
+}
+
+function pageHeading(title,description,buttons="") {
+  return `<div class="page-heading">
+    <div><h1>${esc(title)}</h1><p>${esc(description)}</p></div>
+    <div class="toolbar">${buttons}</div>
+  </div>`;
+}
+
+function button(label,action,kind="secondary",extra="") {
+  return `<button class="btn btn-${kind}" data-action="${esc(action)}" ${extra}>${esc(label)}</button>`;
+}
+
+function metric(label,value,icon,foot="Current demo records") {
+  return `<div class="kpi-card">
+    <div class="kpi-top"><span>${esc(label)}</span><span class="kpi-icon">${icon}</span></div>
+    <div class="kpi-value">${esc(value)}</div><div class="kpi-foot">${esc(foot)}</div>
+  </div>`;
+}
+
+function table(headers,rows,empty="No records found.") {
+  if (!rows.length) return `<div class="empty-state"><strong>${esc(empty)}</strong>Records will appear here when available.</div>`;
+  return `<div class="table-wrap"><table><thead><tr>${headers.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
+}
+
+function panel(title,content,subtitle="") {
+  return `<section class="panel"><div class="panel-heading"><h3>${esc(title)}</h3><small>${esc(subtitle)}</small></div>${content}</section>`;
+}
+
+function showModal(title,body,actions="") {
+  $("#modalTitle").textContent=title;
+  $("#modalBody").innerHTML=body;
+  $("#modalActions").innerHTML=actions || `<button class="btn btn-secondary" data-action="close-modal">Close</button>`;
+  $("#modalBackdrop").classList.add("open");
+}
+
+function closeModal() {
+  $("#modalBackdrop").classList.remove("open");
+}
+
+function field(label,name,type="text",value="",required=true,options=null) {
+  let control;
+  if (options) {
+    control=`<select name="${esc(name)}" ${required?"required":""}>${options.map(o=>`<option value="${esc(o)}" ${o===value?"selected":""}>${esc(o)}</option>`).join("")}</select>`;
+  } else if(type==="textarea") {
+    control=`<textarea name="${esc(name)}" ${required?"required":""}>${esc(value)}</textarea>`;
+  } else {
+    control=`<input name="${esc(name)}" type="${type}" value="${esc(value)}" ${required?"required":""}>`;
+  }
+  return `<div class="field"><label>${esc(label)}</label>${control}</div>`;
+}
+
+function formModal(title,fields,submitAction,submitLabel="Save") {
+  showModal(title,
+    `<form id="recordForm"><div class="form-grid">${fields.join("")}</div></form>`,
+    `<button class="btn btn-secondary" data-action="close-modal">Cancel</button>
+     <button class="btn btn-primary" data-action="${submitAction}">${submitLabel}</button>`
+  );
+}
+
+function formValues() {
+  const form=$("#recordForm");
+  if (!form) return null;
+  if (!form.reportValidity()) return null;
+  return Object.fromEntries(new FormData(form).entries());
+}
+
+function render() {
+  if (!canAccess(currentPage)) currentPage="dashboard";
+  $("#breadcrumb").textContent=MODULES.find(m=>m[0]===currentPage)?.[1] || "Dashboard";
+  document.querySelectorAll(".nav-link").forEach(el=>{
+    el.classList.toggle("active",el.dataset.page===currentPage);
+    el.style.display=canAccess(el.dataset.page)?"flex":"none";
+  });
+  document.querySelectorAll(".chart-panel canvas").forEach(c=>c.remove());
+  chartInstances.forEach(c=>c.destroy());
+  chartInstances=[];
+  const pages={
+    dashboard:renderDashboard,
+    ingestion:renderIngestion,
+    quality:renderQuality,
+    calculations:renderCalculations,
+    reconciliation:renderReconciliation,
+    reports:renderReports,
+    approvals:renderApprovals,
+    regulator:renderRegulator,
+    audit:renderAudit,
+    exceptions:renderExceptions,
+    notifications:renderNotifications,
+    queries:renderQueries,
+    configuration:renderConfiguration
+  };
+  $("#appContent").innerHTML=pages[currentPage]();
+  document.querySelectorAll(".nav-link").forEach(el=>el.classList.toggle("active",el.dataset.page===currentPage));
+  updateNotificationDot();
+  if(currentPage==="dashboard") drawDashboardCharts();
+}
+
+function navigate(page) {
+  if(!canAccess(page)) {
+    toast("Your demo role does not have access to this module.","error");
+    return;
+  }
+  currentPage=page;
+  $("#sidebar").classList.remove("open");
+  render();
+}
+
+function renderDashboard() {
+  const published=db.reports.filter(r=>r.published).length;
+  const approved=db.reports.filter(r=>r.status==="Approved").length;
+  const pending=db.reports.filter(r=>["Under Review","Draft","Generated","Validation Pending"].includes(r.status)).length;
+  const failed=db.feeds.filter(f=>f.status==="Failed").length;
+  const openExc=db.exceptions.filter(e=>!["Closed","Resolved"].includes(e.status)).length;
+  const critical=db.validations.filter(v=>v.severity==="Critical"&&v.status!=="Resolved").length;
+  const pendingQueries=db.queries.filter(q=>q.status!=="Closed").length;
+  return `
+    ${pageHeading("Executive Dashboard","Operational overview of the Basel IV reporting lifecycle.",button("Refresh","refresh","secondary"))}
+    <div class="info-banner">This dashboard uses shared illustrative demo records. Values are not actual regulatory submissions or certified Basel IV calculations.</div>
+    <div class="kpi-grid">
+      ${metric("Total reports",db.reports.length,"▤")}
+      ${metric("Approved reports",approved,"✓")}
+      ${metric("Published reports",published,"▣")}
+      ${metric("Reports awaiting action",pending,"◷")}
+      ${metric("Failed data feeds",failed,"⇧")}
+      ${metric("Open exceptions",openExc,"⚑")}
+      ${metric("Critical data issues",critical,"!")}
+      ${metric("Open regulatory queries",pendingQueries,"?")}
+    </div>
+    <div class="dashboard-grid">
+      <div class="chart-panel"><div class="panel-heading"><h3>Report status distribution</h3><small>Current records</small></div><div class="chart-wrap"><canvas id="reportChart"></canvas></div></div>
+      <div class="chart-panel"><div class="panel-heading"><h3>Data feed health</h3><small>Current feed status</small></div><div class="chart-wrap"><canvas id="feedChart"></canvas></div></div>
+    </div>
+    <div class="dashboard-grid">
+      ${panel("Operational alerts",db.notifications.slice(0,5).map(n=>`<div class="list-row"><div><strong>${esc(n.title)}</strong><small>${esc(n.message)}</small></div>${status(n.severity)}</div>`).join("")||`<div class="empty-state">No alerts.</div>`)}
+      ${panel("Reporting lifecycle",`<div class="lineage"><span>Source</span><b>→</b><span>Ingestion</span><b>→</b><span>Validation</span><b>→</b><span>Reconciliation</span><b>→</b><span>Report</span><b>→</b><span>Approval</span><b>→</b><span>Publication</span></div>`)}
+    </div>
+    <div class="table-panel"><div class="table-heading"><h3>Recent reporting activity</h3>${button("View audit trail","go-audit","secondary")}</div>
+      ${table(["Event","User / Role","Module","Date"],db.audit.slice(0,6).map(a=>`<tr><td>${esc(a.action)} · ${esc(a.reference)}</td><td>${esc(a.user)}</td><td>${esc(a.module)}</td><td>${esc(a.date)}</td></tr>`),"No audit activity yet.")}</div>
+  `;
+}
+
+function drawDashboardCharts() {
+  if(!window.Chart)return;
+  const reportCounts={};
+  db.reports.forEach(r=>reportCounts[r.status]=(reportCounts[r.status]||0)+1);
+  const feedCounts={};
+  db.feeds.forEach(f=>feedCounts[f.status]=(feedCounts[f.status]||0)+1);
+  const a=$("#reportChart"),b=$("#feedChart");
+  if(a) chartInstances.push(new Chart(a,{type:"doughnut",data:{labels:Object.keys(reportCounts),datasets:[{data:Object.values(reportCounts)}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom"}}}}));
+  if(b) chartInstances.push(new Chart(b,{type:"bar",data:{labels:Object.keys(feedCounts),datasets:[{label:"Feeds",data:Object.values(feedCounts)}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}}));
+}
+
+function renderIngestion() {
+  const sourceRows=db.sources.map(s=>`<tr><td>${esc(s.id)}</td><td>${esc(s.name)}</td><td>${esc(s.type)}</td><td>${esc(s.owner)}</td><td>${status(s.status)}</td><td><button class="action-btn" data-action="edit-source" data-id="${s.id}">Edit</button></td></tr>`);
+  const feedRows=db.feeds.map(f=>`<tr><td>${esc(f.id)}</td><td>${esc(f.name)}</td><td>${esc(db.sources.find(s=>s.id===f.source)?.name||f.source)}</td><td>${esc(f.frequency)}</td><td>${esc(f.format)}</td><td>${status(f.status)}</td><td>${esc(f.records)}</td><td><div class="action-group"><button class="action-btn" data-action="run-feed" data-id="${f.id}">Run</button><button class="action-btn" data-action="edit-feed" data-id="${f.id}">Edit</button></div></td></tr>`);
+  return `${pageHeading("Data Ingestion","Register source systems, configure feeds and monitor simulated data ingestion.",button("Register Source","add-source","primary")+button("Create Feed","add-feed","secondary"))}
+  <div class="info-banner">CSV upload and API integration are simulated in this prototype. No external source system is contacted.</div>
+  <div class="metric-row"><div class="metric-chip">Source systems <strong>${db.sources.length}</strong></div><div class="metric-chip">Configured feeds <strong>${db.feeds.length}</strong></div><div class="metric-chip">Failed feeds <strong>${db.feeds.filter(f=>f.status==="Failed").length}</strong></div><div class="metric-chip">Ingestion runs <strong>${db.runs.length}</strong></div></div>
+  <div class="table-panel"><div class="table-heading"><h3>Source system registration</h3></div>${table(["Source ID","Source name","Type","Owner","Status","Action"],sourceRows)}</div>
+  <div class="table-panel"><div class="table-heading"><h3>Data feed management</h3>${button("Simulate file upload","upload-file","secondary")}</div>${table(["Feed ID","Feed name","Source","Frequency","Format","Status","Records","Actions"],feedRows)}</div>
+  <div class="table-panel"><div class="table-heading"><h3>Ingestion execution history</h3></div>${table(["Run ID","Feed","Date","Status","Records","Message"],db.runs.slice(0,20).map(r=>`<tr><td>${esc(r.id)}</td><td>${esc(r.feed)}</td><td>${esc(r.date)}</td><td>${status(r.status)}</td><td>${esc(r.records)}</td><td>${esc(r.message)}</td></tr>`))}</div>`;
+}
+
+function renderQuality() {
+  const rows=db.validations.map(v=>`<tr><td>${esc(v.id)}</td><td>${esc(v.rule)}</td><td>${esc(v.area)}</td><td>${status(v.severity)}</td><td>${status(v.status)}</td><td>${esc(v.owner)}</td><td><button class="action-btn" data-action="resolve-validation" data-id="${v.id}">Resolve</button></td></tr>`);
+  const resolved=db.validations.filter(v=>v.status==="Resolved").length;
+  return `${pageHeading("Data Quality & Validation","Review data quality rules, investigate failures and record remediation.",button("Add validation issue","add-validation","primary")+button("Run validation","run-validation","secondary"))}
+  <div class="metric-row"><div class="metric-chip">Total issues <strong>${db.validations.length}</strong></div><div class="metric-chip">Resolved <strong>${resolved}</strong></div><div class="metric-chip">Open <strong>${db.validations.length-resolved}</strong></div><div class="metric-chip">Critical open <strong>${db.validations.filter(v=>v.severity==="Critical"&&v.status!=="Resolved").length}</strong></div></div>
+  <div class="info-banner">Demo validation categories include mandatory fields, data types, format, duplicates, ranges and referential checks. The checks shown here are illustrative.</div>
+  <div class="table-panel"><div class="table-heading"><h3>Validation results and issues</h3></div>${table(["Issue ID","Rule","Data area","Severity","Status","Owner","Action"],rows)}</div>`;
+}
+
+function renderCalculations() {
+  const rows=db.calculations.map(c=>`<tr><td>${esc(c.id)}</td><td>${esc(c.type)}</td><td>${esc(c.period)}</td><td>${esc(c.version)}</td><td>${status(c.status)}</td><td>${c.output?money(c.output):"—"}</td></tr>`);
+  return `${pageHeading("Basel IV Calculation Integration","Track illustrative calculation outputs from risk domains.",button("Run demo calculation","run-calculation","primary"))}
+  <div class="warning-banner">All calculation outputs are illustrative placeholders. This prototype does not implement official Basel IV regulatory formulas or connect to a calculation engine.</div>
+  <div class="metric-row"><div class="metric-chip">Calculation types <strong>Credit · Market · Operational · CVA</strong></div><div class="metric-chip">Calculation runs <strong>${db.calculations.length}</strong></div></div>
+  <div class="table-panel"><div class="table-heading"><h3>Calculation execution history</h3></div>${table(["Run ID","Calculation area","Period","Version","Status","Illustrative output"],rows)}</div>`;
+}
+
+function renderReconciliation() {
+  const rows=db.reconciliations.map(r=>`<tr><td>${esc(r.id)}</td><td>${esc(r.name)}</td><td>${esc(r.period)}</td><td>${money(r.expected)}</td><td>${money(r.actual)}</td><td>${money(r.actual-r.expected)}</td><td>${status(r.status)}</td><td><button class="action-btn" data-action="rerun-reconciliation" data-id="${r.id}">Re-run</button></td></tr>`);
+  return `${pageHeading("Reconciliation","Compare source figures against reporting figures and investigate mismatches.",button("New reconciliation","add-reconciliation","primary"))}
+  <div class="info-banner">Reconciliation values are sample amounts for demonstration. A mismatch can be recorded as an operational exception.</div>
+  <div class="table-panel"><div class="table-heading"><h3>Reconciliation results</h3></div>${table(["ID","Comparison","Period","Expected","Actual","Difference","Status","Action"],rows)}</div>`;
+}
+
+function renderReports() {
+  const rows=db.reports.map(r=>`<tr><td>${esc(r.id)}</td><td>${esc(r.name)}</td><td>${esc(r.period)}</td><td>${esc(r.entity)}</td><td>${status(r.status)}</td><td>${esc(r.owner)}</td><td><div class="action-group"><button class="action-btn" data-action="view-report" data-id="${r.id}">View</button><button class="action-btn" data-action="submit-report" data-id="${r.id}">Submit</button></div></td></tr>`);
+  return `${pageHeading("Regulatory Reports","Generate, review and manage reporting-period deliverables.",button("Create report","add-report","primary")+button("Export catalogue","export-reports","secondary"))}
+  <div class="info-banner">Report content and values are sample data. Submission is a simulated internal workflow, not a regulator submission.</div>
+  <div class="metric-row"><div class="metric-chip">Total reports <strong>${db.reports.length}</strong></div><div class="metric-chip">Approved <strong>${db.reports.filter(r=>r.status==="Approved").length}</strong></div><div class="metric-chip">Published <strong>${db.reports.filter(r=>r.published).length}</strong></div></div>
+  <div class="table-panel"><div class="table-heading"><h3>Report catalogue</h3></div>${table(["Report ID","Report name","Period","Entity","Status","Owner","Actions"],rows)}</div>`;
+}
+
+function renderApprovals() {
+  const pending=db.reports.filter(r=>r.status==="Under Review");
+  const rows=pending.map(r=>`<tr><td>${esc(r.id)}</td><td>${esc(r.name)}</td><td>${esc(r.period)}</td><td>${esc(r.owner)}</td><td>${status(r.status)}</td><td><div class="action-group"><button class="action-btn" data-action="approve-report" data-id="${r.id}">Approve</button><button class="action-btn" data-action="reject-report" data-id="${r.id}">Return</button></div></td></tr>`);
+  return `${pageHeading("Workflow & Approvals","Maker-checker review queue for regulatory reports.")}
+  <div class="warning-banner">A report owner cannot approve their own report. Critical unresolved validation issues block approval.</div>
+  <div class="table-panel"><div class="table-heading"><h3>Reports awaiting review</h3></div>${table(["Report ID","Report","Period","Maker","Status","Review actions"],rows,"No reports are currently awaiting approval.")}</div>`;
+}
+
+function renderRegulator() {
+  const rows=db.reports.filter(r=>r.status==="Published"&&r.published).map(r=>`<tr><td>${esc(r.id)}</td><td>${esc(r.name)}</td><td>${esc(r.period)}</td><td>${esc(r.entity)}</td><td>${status("Published")}</td><td><button class="action-btn" data-action="view-report" data-id="${r.id}">View</button></td></tr>`);
+  return `${pageHeading("Regulator Portal","Read-only catalogue of reports that have completed approval and publication.")}
+  <div class="info-banner">Supervisory users can see published reports only. This is a simulated portal, not a live regulator connection.</div>
+  <div class="table-panel"><div class="table-heading"><h3>Published regulatory reports</h3></div>${table(["Report ID","Report name","Period","Entity","Publication status","Action"],rows,"No published reports are available.")}</div>`;
+}
+
+function renderAudit() {
+  const rows=db.audit.map(a=>`<tr><td>${esc(a.id)}</td><td>${esc(a.user)}</td><td>${esc(a.action)}</td><td>${esc(a.module)}</td><td>${esc(a.reference)}</td><td>${esc(a.date)}</td><td>${esc(a.details)}</td></tr>`);
+  return `${pageHeading("Audit Trail & Data Lineage","Review recorded user actions and follow the reporting data lifecycle.",button("Export audit CSV","export-audit","secondary"))}
+  <div class="info-banner">Audit events are appended by this frontend demo. LocalStorage is not tamper-proof and is not a production audit repository.</div>
+  <div class="lineage"><span>Source</span><b>→</b><span>Feed</span><b>→</b><span>Ingestion</span><b>→</b><span>Validation</span><b>→</b><span>Reconciliation</span><b>→</b><span>Calculation</span><b>→</b><span>Report</span><b>→</b><span>Approval</span><b>→</b><span>Publication</span></div>
+  <div class="table-panel"><div class="table-heading"><h3>Audit events</h3></div>${table(["Event ID","User / Role","Action","Module","Reference","Timestamp","Details"],rows,"No audit events recorded yet.")}</div>`;
+}
+
+function renderExceptions() {
+  const rows=db.exceptions.map(e=>`<tr><td>${esc(e.id)}</td><td>${esc(e.title)}</td><td>${esc(e.category)}</td><td>${status(e.severity)}</td><td>${status(e.priority)}</td><td>${esc(e.assignee)}</td><td>${status(e.status)}</td><td><button class="action-btn" data-action="resolve-exception" data-id="${e.id}">Resolve</button></td></tr>`);
+  return `${pageHeading("Exception Management","Assign, prioritize, investigate and resolve operational and data exceptions.",button("Create exception","add-exception","primary"))}
+  <div class="metric-row"><div class="metric-chip">Total exceptions <strong>${db.exceptions.length}</strong></div><div class="metric-chip">Open <strong>${db.exceptions.filter(e=>!["Resolved","Closed"].includes(e.status)).length}</strong></div><div class="metric-chip">Critical <strong>${db.exceptions.filter(e=>e.severity==="Critical").length}</strong></div></div>
+  <div class="table-panel"><div class="table-heading"><h3>Exception register</h3></div>${table(["ID","Title","Category","Severity","Priority","Assignee","Status","Action"],rows)}</div>`;
+}
+
+function renderNotifications() {
+  const rows=db.notifications.map(n=>`<tr><td>${esc(n.title)}</td><td>${esc(n.message)}</td><td>${status(n.severity)}</td><td>${esc(n.date)}</td><td>${n.read?"Read":"Unread"}</td><td><button class="action-btn" data-action="read-notification" data-id="${n.id}">Mark read</button></td></tr>`);
+  return `${pageHeading("Notifications & Alerts","Review operational alerts, reporting deadlines and workflow updates.",button("Mark all read","read-all","secondary"))}
+  <div class="table-panel"><div class="table-heading"><h3>Notification centre</h3></div>${table(["Title","Message","Severity","Date","Read status","Action"],rows)}</div>`;
+}
+
+function renderQueries() {
+  const rows=db.queries.map(q=>`<tr><td>${esc(q.id)}</td><td>${esc(q.report)}</td><td>${esc(q.period)}</td><td>${esc(q.category)}</td><td>${status(q.priority)}</td><td>${esc(q.owner)}</td><td>${status(q.status)}</td><td><button class="action-btn" data-action="respond-query" data-id="${q.id}">Respond</button></td></tr>`);
+  return `${pageHeading("Regulatory Query Management","Track supervisory questions, responses, evidence and due dates.",button("Add query","add-query","primary"))}
+  <div class="table-panel"><div class="table-heading"><h3>Query register</h3></div>${table(["Query ID","Report","Period","Category","Priority","Owner","Status","Action"],rows)}</div>`;
+}
+
+function renderConfiguration() {
+  const rows=db.config.map(c=>`<tr><td>${esc(c.id)}</td><td>${esc(c.type)}</td><td>${esc(c.name)}</td><td>${esc(c.value)}</td><td>${status(c.status)}</td><td><button class="action-btn" data-action="edit-config" data-id="${c.id}">Edit</button></td></tr>`);
+  return `${pageHeading("Configuration Management","Manage demonstration reference values and reporting settings.",button("Add configuration","add-config","primary"))}
+  <div class="warning-banner">Configuration updates in this prototype are local demo changes. Production configuration requires controlled server-side permissions and approvals.</div>
+  <div class="table-panel"><div class="table-heading"><h3>Configuration register</h3></div>${table(["ID","Type","Name","Value","Status","Action"],rows)}</div>
+  <div class="table-panel"><div class="table-heading"><h3>Demo environment</h3></div><div class="panel"><p class="muted small">Reset all browser demo records to the original sample dataset.</p>${button("Reset demo data","reset-data","danger")}</div></div>`;
+}
+
+
+/* =========================================================
+   ACTIONS, WORKFLOWS, FORMS AND EXPORTS
+========================================================= */
+
+function addSource() {
+  formModal("Register Source System",[
+    field("Source name","name"),
+    field("Source type","type","text","Database",true,["Database","API","File","Other"]),
+    field("Business owner","owner"),
+    field("Status","status","text","Active",true,["Active","Inactive"])
+  ],"save-source");
+}
+
+function addFeed() {
+  if(!db.sources.length){toast("Register a source system first.","error");return;}
+  formModal("Create Data Feed",[
+    field("Feed name","name"),
+    field("Source system","source","text",db.sources[0].id,true,db.sources.map(s=>s.id)),
+    field("Frequency","frequency","text","Daily",true,["Daily","Weekly","Monthly","On Demand"]),
+    field("Format","format","text","CSV",true,["CSV","JSON","XML","API"]),
+    field("Status","status","text","Active",true,["Active","Inactive"])
+  ],"save-feed");
+}
+
+function addValidation() {
+  formModal("Create Data Quality Issue",[
+    field("Validation rule","rule"),
+    field("Data area","area"),
+    field("Severity","severity","text","Medium",true,["Low","Medium","High","Critical"]),
+    field("Details","details","textarea"),
+    field("Owner","owner","text",activeRole)
+  ],"save-validation");
+}
+
+function addReconciliation() {
+  formModal("Create Reconciliation",[
+    field("Comparison name","name"),
+    field("Reporting period","period","text","2026-Q3"),
+    field("Expected amount","expected","number","0"),
+    field("Actual amount","actual","number","0"),
+    field("Owner","owner","text",activeRole)
+  ],"save-reconciliation");
+}
+
+function addReport() {
+  formModal("Create Regulatory Report",[
+    field("Report name","name"),
+    field("Reporting period","period","text","2026-Q3"),
+    field("Entity","entity","text","Demo Bank"),
+    field("Owner","owner","text",activeRole)
+  ],"save-report");
+}
+
+function addException() {
+  formModal("Create Exception",[
+    field("Title","title"),
+    field("Category","category","text","Data Quality",true,["Feed Failure","Data Quality","Reconciliation","Calculation","Report Validation","Approval","SLA","Regulatory Submission"]),
+    field("Severity","severity","text","Medium",true,["Low","Medium","High","Critical"]),
+    field("Priority","priority","text","Medium",true,["Low","Medium","High","Critical"]),
+    field("Assignee","assignee","text",activeRole),
+    field("Details","details","textarea")
+  ],"save-exception");
+}
+
+function addQuery() {
+  formModal("Create Regulatory Query",[
+    field("Related report","report","text","Capital Adequacy Report"),
+    field("Reporting period","period","text","2026-Q3"),
+    field("Category","category","text","Capital",true,["Capital","Credit Risk","Market Risk","Operational Risk","Liquidity","Other"]),
+    field("Priority","priority","text","Medium",true,["Low","Medium","High","Critical"]),
+    field("Owner","owner","text",activeRole),
+    field("Question / description","question","textarea"),
+    field("Due date","due","date",today())
+  ],"save-query");
+}
+
+function addConfig() {
+  formModal("Add Configuration",[
+    field("Configuration type","type","text","Reference Data",true,["Reporting Calendar","Validation Rule","Reconciliation Tolerance","Notification Setting","Reference Data","Workflow"]),
+    field("Name","name"),
+    field("Value","value"),
+    field("Status","status","text","Active",true,["Active","Inactive"])
+  ],"save-config");
+}
+
+function findRecord(collection,id) {
+  return db[collection].find(x=>x.id===id);
+}
+
+function saveForm(collection,record,prefix,action,module) {
+  record.id=makeId(prefix);
+  db[collection].unshift(record);
+  saveData();
+  log(action,module,record.id);
+  closeModal();
+  toast("Record saved successfully.");
+  render();
+}
+
+function handleAction(action,id) {
+  let record;
+
+  switch(action) {
+    case "close-modal":
+      closeModal(); return;
+
+    case "refresh":
+      render(); toast("Dashboard refreshed."); return;
+
+    case "go-audit":
+      navigate("audit"); return;
+
+    case "add-source": addSource(); return;
+    case "add-feed": addFeed(); return;
+    case "add-validation": addValidation(); return;
+    case "add-reconciliation": addReconciliation(); return;
+    case "add-report": addReport(); return;
+    case "add-exception": addException(); return;
+    case "add-query": addQuery(); return;
+    case "add-config": addConfig(); return;
+
+    case "save-source": {
+      const v=formValues(); if(!v)return;
+      if(db.sources.some(s=>s.name.toLowerCase()===v.name.toLowerCase())){
+        toast("A source with this name already exists.","error");return;
+      }
+      saveForm("sources",v,"SRC","Source registered","ingestion");return;
+    }
+
+    case "save-feed": {
+      const v=formValues();if(!v)return;
+      if(db.feeds.some(f=>f.name.toLowerCase()===v.name.toLowerCase())){
+        toast("A feed with this name already exists.","error");return;
+      }
+      v.records=0;v.lastRun="Not run";
+      saveForm("feeds",v,"FEED","Feed configured","ingestion");return;
+    }
+
+    case "save-validation": {
+      const v=formValues();if(!v)return;
+      v.status="Open";
+      saveForm("validations",v,"VAL","Validation issue created","quality");return;
+    }
+
+    case "save-reconciliation": {
+      const v=formValues();if(!v)return;
+      v.expected=Number(v.expected);v.actual=Number(v.actual);
+      v.status=Math.abs(v.expected-v.actual)<0.01?"Matched":"Mismatch";
+      saveForm("reconciliations",v,"REC","Reconciliation created","reconciliation");
+      if(v.status==="Mismatch"){
+        createExceptionFromEvent("Reconciliation mismatch","Reconciliation","High","Expected and actual amounts differ.");
+      }
+      return;
+    }
+
+    case "save-report": {
+      const v=formValues();if(!v)return;
+      v.status="Draft";v.published=false;
+      saveForm("reports",v,"RPT","Report created","reports");return;
+    }
+
+    case "save-exception": {
+      const v=formValues();if(!v)return;
+      v.status="Open";v.created=today();
+      saveForm("exceptions",v,"EXC","Exception created","exceptions");return;
+    }
+
+    case "save-query": {
+      const v=formValues();if(!v)return;
+      v.status="Received";v.response="";
+      saveForm("queries",v,"QRY","Regulatory query created","queries");return;
+    }
+
+    case "save-config": {
+      const v=formValues();if(!v)return;
+      saveForm("config",v,"CFG","Configuration created","configuration");return;
+    }
+
+    case "edit-source": {
+      record=findRecord("sources",id);if(!record)return;
+      formModal("Edit Source System",[
+        field("Source name","name","text",record.name),
+        field("Source type","type","text",record.type,true,["Database","API","File","Other"]),
+        field("Business owner","owner","text",record.owner),
+        field("Status","status","text",record.status,true,["Active","Inactive"])
+      ],"update-source");return;
+    }
+
+    case "update-source": {
+      const v=formValues();if(!v)return;
+      record=findRecord("sources",id);
+      if(!record)return;
+      Object.assign(record,v);
+      saveData();log("Source system updated","ingestion",record.id);
+      closeModal();toast("Source updated.");render();return;
+    }
+
+    case "edit-feed": {
+      record=findRecord("feeds",id);if(!record)return;
+      formModal("Edit Data Feed",[
+        field("Feed name","name","text",record.name),
+        field("Frequency","frequency","text",record.frequency,true,["Daily","Weekly","Monthly","On Demand"]),
+        field("Format","format","text",record.format,true,["CSV","JSON","XML","API"]),
+        field("Status","status","text",record.status,true,["Active","Inactive"])
+      ],"update-feed");return;
+    }
+
+    case "update-feed": {
+      const v=formValues();if(!v)return;
+      record=findRecord("feeds",id);if(!record)return;
+      Object.assign(record,v);saveData();
+      log("Feed updated","ingestion",record.id);
+      closeModal();toast("Feed updated.");render();return;
+    }
+
+    case "run-feed": {
+      record=findRecord("feeds",id);if(!record)return;
+      if(record.status==="Inactive"){toast("Activate this feed before running it.","error");return;}
+      const failed=Math.random()<0.18;
+      const run={
+        id:makeId("RUN"),feed:id,date:stamp(),
+        status:failed?"Failed":"Completed",
+        records:failed?0:Math.floor(Math.random()*9000+1000),
+        message:failed?"Simulated source connection failure":"Simulated ingestion completed successfully"
+      };
+      db.runs.unshift(run);
+      record.status=run.status;
+      record.lastRun=today();
+      record.records=run.records;
+      log("Feed execution "+run.status,"ingestion",id,run.message);
+      notify("Feed "+run.status,record.name+" — "+run.message,failed?"Critical":"Low","ingestion");
+      if(failed) createExceptionFromEvent(record.name+" failed","Feed Failure","High",run.message);
+      saveData();toast("Feed execution: "+run.status,failed?"error":"success");render();return;
+    }
+
+    case "upload-file": {
+      formModal("Simulate File Upload",[
+        field("Target feed","feed","text",db.feeds[0]?.id||"",true,db.feeds.map(f=>f.id)),
+        field("Select CSV file","file","file"),
+        field("Description","description","textarea","Demonstration upload")
+      ],"process-upload","Validate and process");return;
+    }
+
+    case "process-upload": {
+      const form=$("#recordForm");
+      if(!form.reportValidity())return;
+      const v=new FormData(form);
+      const file=form.querySelector('[name="file"]').files[0];
+      if(!file){toast("Choose a file first.","error");return;}
+      const feedId=v.get("feed");
+      const feed=findRecord("feeds",feedId);
+      if(!feed)return;
+      const isCsv=file.name.toLowerCase().endsWith(".csv");
+      const run={
+        id:makeId("RUN"),feed:feedId,date:stamp(),
+        status:isCsv?"Completed":"Failed",
+        records:isCsv?Math.floor(Math.random()*500+50):0,
+        message:isCsv?"Demo CSV accepted. File contents are not imported.":"Unsupported file type. Please select a CSV file."
+      };
+      db.runs.unshift(run);feed.status=run.status;feed.lastRun=today();feed.records=run.records;
+      log("File upload simulation "+run.status,"ingestion",feedId,file.name);
+      if(!isCsv)notify("File validation failed",run.message,"High","ingestion");
+      closeModal();saveData();toast(run.message,isCsv?"success":"error");render();return;
+    }
+
+    case "run-validation": {
+      const sample=[
+        {rule:"Data type validation",area:"Source data",severity:"Warning",status:"Open",details:"Sample data type check requires review.",owner:activeRole},
+        {rule:"Reporting period completeness",area:"Reporting",severity:"Medium",status:"Open",details:"Sample reporting period completeness check.",owner:activeRole}
+      ];
+      sample.forEach(v=>{v.id=makeId("VAL");db.validations.unshift(v);});
+      log("Demo validation run completed","quality","VALIDATION");
+      notify("Validation completed","Illustrative validation checks were added.","Low","quality");
+      saveData();toast("Demo validation completed.");render();return;
+    }
+
+    case "resolve-validation": {
+      record=findRecord("validations",id);if(!record)return;
+      record.status="Resolved";saveData();
+      log("Validation issue resolved","quality",id);
+      toast("Validation issue marked as resolved.");render();return;
+    }
+
+    case "run-calculation": {
+      const types=["Credit Risk","Market Risk","Operational Risk","CVA","RWA","Capital Adequacy","Leverage","Liquidity"];
+      const type=types[Math.floor(Math.random()*types.length)];
+      const output=Math.floor(Math.random()*100000000+10000000);
+      const c={id:makeId("CAL"),type,period:"2026-Q3",version:"Demo 1.0",status:"Completed",output};
+      db.calculations.unshift(c);
+      log("Illustrative calculation executed","calculations",c.id,"Demo output: "+output);
+      notify("Calculation completed",type+" illustrative output is available.","Low","calculations");
+      saveData();toast("Illustrative calculation completed.");render();return;
+    }
+
+    case "rerun-reconciliation": {
+      record=findRecord("reconciliations",id);if(!record)return;
+      record.status=Math.abs(record.expected-record.actual)<0.01?"Matched":"Mismatch";
+      log("Reconciliation re-run","reconciliation",id);
+      if(record.status==="Mismatch"){
+        createExceptionFromEvent("Reconciliation mismatch "+id,"Reconciliation","High","Difference: "+(record.actual-record.expected));
+      }
+      saveData();toast("Reconciliation re-run completed.");render();return;
+    }
+
+    case "submit-report": {
+      record=findRecord("reports",id);if(!record)return;
+      if(record.status==="Published"){toast("This report is already published.","error");return;}
+      if(record.status==="Under Review"||record.status==="Approved"){toast("This report is already in the workflow.","error");return;}
+      const critical=db.validations.some(v=>v.severity==="Critical"&&v.status!=="Resolved");
+      if(critical){toast("Resolve critical data quality issues before submission.","error");return;}
+      record.status="Under Review";
+      log("Report submitted for approval","reports",id);
+      notify("Report awaiting approval",record.name+" has entered the review queue.","Medium","approvals");
+      saveData();toast("Report submitted for review.");render();return;
+    }
+
+    case "approve-report": {
+      record=findRecord("reports",id);if(!record)return;
+      if(record.status!=="Under Review"){toast("Report is not awaiting review.","error");return;}
+      if(record.owner===activeRole){toast("Maker-checker rule: you cannot approve your own report.","error");return;}
+      if(db.validations.some(v=>v.severity==="Critical"&&v.status!=="Resolved")){
+        toast("Critical validation issues must be resolved first.","error");return;
+      }
+      record.status="Approved";
+      record.approvedBy=activeRole;
+      record.approvedAt=stamp();
+      log("Report approved","approvals",id);
+      notify("Report approved",record.name+" has been approved and is eligible for publication.","Low","reports");
+      saveData();toast("Report approved. It can now be published.");render();return;
+    }
+
+    case "reject-report": {
+      record=findRecord("reports",id);if(!record)return;
+      if(record.status!=="Under Review"){toast("Report is not awaiting review.","error");return;}
+      record.status="Rejected";
+      log("Report returned for correction","approvals",id);
+      notify("Report returned",record.name+" was returned for correction.","High","reports");
+      saveData();toast("Report returned for correction.");render();return;
+    }
+
+    case "view-report": {
+      record=findRecord("reports",id);if(!record)return;
+      if(currentPage==="regulator"&&(!record.published||record.status!=="Published")){
+        toast("Only published reports are available in the regulator portal.","error");return;
+      }
+      showModal("Report details",
+        `<div class="field"><label>Report ID</label><div>${esc(record.id)}</div></div>
+         <div class="field"><label>Report name</label><div>${esc(record.name)}</div></div>
+         <div class="field"><label>Period</label><div>${esc(record.period)}</div></div>
+         <div class="field"><label>Entity</label><div>${esc(record.entity)}</div></div>
+         <div class="field"><label>Status</label><div>${status(record.status)}</div></div>
+         <div class="field"><label>Owner</label><div>${esc(record.owner)}</div></div>
+         <div class="info-banner">Illustrative report preview. No certified regulatory figures are included.</div>`,
+        `<button class="btn btn-secondary" data-action="close-modal">Close</button>
+         ${record.status==="Approved"?`<button class="btn btn-primary" data-action="publish-report" data-id="${record.id}">Publish report</button>`:""}`
+      );return;
+    }
+
+    case "publish-report": {
+      record=findRecord("reports",id);if(!record)return;
+      if(record.status!=="Approved"){toast("Only approved reports can be published.","error");return;}
+      record.status="Published";record.published=true;record.publishedAt=stamp();
+      log("Report published to demo regulator portal","reports",id);
+      notify("Report published",record.name+" is now visible in the regulator portal.","Low","regulator");
+      saveData();closeModal();toast("Report published to the demo portal.");render();return;
+    }
+
+    case "resolve-exception": {
+      record=findRecord("exceptions",id);if(!record)return;
+      record.status="Resolved";record.resolvedAt=stamp();
+      log("Exception resolved","exceptions",id);
+      saveData();toast("Exception marked as resolved.");render();return;
+    }
+
+    case "read-notification": {
+      record=findRecord("notifications",id);if(!record)return;
+      record.read=true;saveData();render();return;
+    }
+
+    case "read-all": {
+      db.notifications.forEach(n=>n.read=true);
+      saveData();toast("All notifications marked as read.");render();return;
+    }
+
+    case "respond-query": {
+      record=findRecord("queries",id);if(!record)return;
+      formModal("Respond to Regulatory Query",[
+        field("Response","response","textarea",record.response||""),
+        field("Status","status","text",record.status,true,["Received","Assigned","In Progress","Response Submitted","Under Review","Closed"])
+      ],"save-query-response");return;
+    }
+
+    case "save-query-response": {
+      const v=formValues();if(!v)return;
+      record=findRecord("queries",id);if(!record)return;
+      record.response=v.response;record.status=v.status;
+      record.responseUpdated=stamp();
+      log("Regulatory query response updated","queries",id);
+      saveData();closeModal();toast("Query response updated.");render();return;
+    }
+
+    case "edit-config": {
+      record=findRecord("config",id);if(!record)return;
+      formModal("Edit Configuration",[
+        field("Configuration type","type","text",record.type),
+        field("Name","name","text",record.name),
+        field("Value","value","text",record.value),
+        field("Status","status","text",record.status,true,["Active","Inactive"])
+      ],"update-config");return;
+    }
+
+    case "update-config": {
+      const v=formValues();if(!v)return;
+      record=findRecord("config",id);if(!record)return;
+      Object.assign(record,v);saveData();
+      log("Configuration updated","configuration",id);
+      closeModal();toast("Configuration updated.");render();return;
+    }
+
+    case "export-audit":
+      exportCSV("reg-vision-audit.csv",db.audit);return;
+
+    case "export-reports":
+      exportCSV("reg-vision-reports.csv",db.reports);return;
+
+    case "reset-data":
+      if(activeRole!=="Regulatory Administrator"){toast("Only the Regulatory Administrator demo role can reset the demo.","error");return;}
+      if(confirm("Reset all REG VISION demo records to their initial values?")){
+        db=structuredClone(seedData);
+        localStorage.setItem("regVisionData",JSON.stringify(db));
+        log("Demo data reset","configuration","RESET");
+        toast("Demo records reset.");
+        navigate("dashboard");
+      }
+      return;
+  }
+}
+
+function createExceptionFromEvent(title,category,severity,details) {
+  const e={
+    id:makeId("EXC"),title,category,severity,
+    priority:severity,assignee:"Unassigned",status:"Open",
+    details,created:today()
+  };
+  db.exceptions.unshift(e);
+  log("Exception generated automatically","exceptions",e.id,details);
+}
+
+function exportCSV(filename,records) {
+  if(!records.length){toast("There are no records to export.","error");return;}
+  const headers=[...new Set(records.flatMap(r=>Object.keys(r)))];
+  const quote=value=>`"${String(value??"").replace(/"/g,'""')}"`;
+  const csv=[
+    headers.map(quote).join(","),
+    ...records.map(r=>headers.map(h=>quote(r[h])).join(","))
+  ].join("\r\n");
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=filename;a.click();
+  URL.revokeObjectURL(url);
+  toast("CSV export prepared.");
+}
+
+/* =========================================================
+   EVENT HANDLERS AND APPLICATION INITIALIZATION
+========================================================= */
+
+$("#navigation").addEventListener("click",event=>{
+  const item=event.target.closest("[data-page]");
+  if(item)navigate(item.dataset.page);
+});
+
+$("#appContent").addEventListener("click",event=>{
+  const control=event.target.closest("[data-action]");
+  if(!control)return;
+  handleAction(control.dataset.action,control.dataset.id);
+});
+
+$("#modalActions").addEventListener("click",event=>{
+  const control=event.target.closest("[data-action]");
+  if(!control)return;
+  handleAction(control.dataset.action,control.dataset.id);
+});
+
+$("#modalClose").addEventListener("click",closeModal);
+$("#modalBackdrop").addEventListener("click",event=>{
+  if(event.target.id==="modalBackdrop")closeModal();
+});
+
+$("#menuToggle").addEventListener("click",()=>{
+  $("#sidebar").classList.toggle("open");
+});
+
+$("#notificationButton").addEventListener("click",()=>{
+  navigate("notifications");
+});
+
+$("#roleSelector").addEventListener("change",event=>{
+  activeRole=event.target.value;
+  localStorage.setItem("rv_role",activeRole);
+  log("Demo role changed","configuration",activeRole);
+  updateProfile();
+  if(!canAccess(currentPage))currentPage="dashboard";
+  render();
+  toast("Demo role switched to "+activeRole+".");
+});
+
+function updateProfile() {
+  $("#userName").textContent=activeRole==="Regulator / Supervisory User"?"Supervisory User":"Demo User";
+  $("#userRole").textContent=activeRole;
+  $("#userAvatar").textContent=activeRole.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
+}
+
+function initialize() {
+  loadData();
+
+  if(!ROLES.includes(activeRole))activeRole="Regulatory Administrator";
+
+  $("#roleSelector").innerHTML=ROLES.map(r=>
+    `<option value="${esc(r)}" ${r===activeRole?"selected":""}>${esc(r)}</option>`
+  ).join("");
+
+  updateProfile();
+  log("Application session started","dashboard","SESSION","Demo session initialized");
+  render();
+}
+
+initialize();
